@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be My Date?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive;
+      background-color: #fff0f5;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    h1 {
+      color: #ff66a3;
+      font-size: 32px;
+      margin-top: 20px;
+    }
+
+    /* Buttons area */
+    #buttons {
+      margin-top: 30px;
+      position: relative;
+      min-height: 150px;
+    }
+
+    button {
+      font-size: 18px;
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    #yesBtn {
+      background-color: #ff66a3;
+      color: white;
+      z-index: 10;
+    }
+
+    #noBtn {
+      background-color: #999;
+      color: white;
+      position: absolute;
+      transition: top 0.3s ease, left 0.3s ease;
+    }
+
+    /* Flirty text */
+    #flirty-line {
+      font-size: 18px;
+      color: #ff4081;
+      margin-top: 20px;
+      min-height: 24px;
+    }
+
+    /* GIF container */
+    #gif-display {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .response-img {
+      width: 90%;
+      max-width: 300px;
+      border-radius: 20px;
+      margin-top: 10px;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+    }
+  </style>
+</head>
+<body>
+  <h1>Will you be my date? 🥺</h1>
+
+  <div id="buttons">
+    <button id="yesBtn">Yes 💖</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+
+  <p id="flirty-line"></p>
+
+  <!-- Starting GIF -->
+  <div id="gif-display">
+    <img src="img/start.gif" alt="Starting gif" class="response-img" />
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById('yesBtn');
+    const noBtn = document.getElementById('noBtn');
+    const flirtyLine = document.getElementById('flirty-line');
+    const gifDisplay = document.getElementById('gif-display');
+
+    let yesSize = 18;
+    let noClickCount = 0;
+    const totalNoGifs = 8;  // 8 different GIFs
+
+    const flirtyLines = [
+      "But I made Biryani for you 🥺",
+      "No? Are you sure? 😥",
+      "I'll let you choose the pizza toppings 🍕",
+      "Come on, I'm cute na 🐰",
+      "I’ll cry... don't make me 😢",
+      "I told my teddy about us 🧸",
+      "You're secretly blushing, I know 😏",
+      "Still no? My heart is breaking 💔",
+      "Mujhe tumhari hasi dekhni hai 💕",
+      "Tum meri duniya ho 🌎❤️",
+      "Mera dil tumhare liye hi dhadakta hai 💖",
+      "Tumhare bina ye duniya adhoori lagti hai 🌸",
+      "Ek baar YES bol do na, main tumhara ho jaaunga hamesha ke liye 💍"
+    ];
+
+    noBtn.addEventListener('click', () => {
+      noClickCount++;
+      yesSize += 10;  // YES button ab dheere badega
+      yesBtn.style.fontSize = `${yesSize}px`;
+
+      // Romantic line
+      flirtyLine.innerText = flirtyLines[Math.floor(Math.random() * flirtyLines.length)];
+
+      // Show GIF (replace)
+      const gifNumber = (noClickCount % totalNoGifs) || totalNoGifs;
+      gifDisplay.innerHTML = `<img src="img/no/no${gifNumber}.gif" alt="No gif" class="response-img" />`;
+
+      // Move "No" button but keep inside screen
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 120;
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+
+      // NO button sirf 9 click ke baad remove hoga
+      if (noClickCount >= 9) {
+        noBtn.style.display = 'none';
+        flirtyLine.innerText = "No more NOs! Ab sirf YES bacha hai 😘";
+      }
+    });
+
+    yesBtn.addEventListener('click', () => {
+      document.body.innerHTML = `
+        <h1>Yay! You said yes! 💕😊</h1>
+        <img src="img/yes/yes1.gif" alt="Happy gif" class="response-img" />
+        <p style="font-size:18px; margin-top:20px;">Ab hamare rishte ko naam mil gaya 😘</p>
+      `;
+    });
+  </script>
+</body>
+</html>
